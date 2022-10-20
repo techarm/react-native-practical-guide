@@ -16,15 +16,16 @@ function GoalItem(props) {
 const styles = StyleSheet.create({
   goalItem: {
     margin: 8,
-    padding: 8,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
     borderRadius: 6,
-    backgroundColor: "#5e0acc",
+    backgroundColor: "#e4d0ff",
   },
   pressedItem: {
     opacity: 0.5,
   },
   goalText: {
-    color: "white",
+    color: "#f31282",
   },
 });
 

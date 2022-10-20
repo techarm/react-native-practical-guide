@@ -1,7 +1,10 @@
 {
-	"folders": [
-		{
-			"path": "01-basic"
-		}
-	]
+  "folders": [
+    {
+      "path": "01-basic"
+    },
+    {
+      "path": "02-diving-deeper"
+    }
+  ]
 }

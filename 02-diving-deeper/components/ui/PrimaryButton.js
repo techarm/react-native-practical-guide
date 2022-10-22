@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   buttonText: {
+    fontFamily: "open-sans",
     color: "white",
     textAlign: "center",
   },

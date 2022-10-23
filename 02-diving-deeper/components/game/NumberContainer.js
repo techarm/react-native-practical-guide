@@ -1,5 +1,9 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Colors from "../../constants/colors";
+
+// screen: entire available width and height including the status bar.
+// window: entire available width and height excluding the status bar.
+const deviceWidth = Dimensions.get("window").width;
 
 const NumberContainer = ({ children }) => {
   return (
@@ -17,9 +21,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   container: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
+    width: deviceWidth / 2,
+    height: deviceWidth / 2,
+    borderRadius: deviceWidth / 4,
     borderWidth: 3,
     borderColor: Colors.accent500,
     marginTop: 24,
@@ -29,8 +33,9 @@ const styles = StyleSheet.create({
   },
   numberText: {
     color: Colors.accent500,
-    fontSize: 96,
+    fontSize: deviceWidth / 4,
     fontFamily: "open-sans-bold",
   },
 });
+
 export default NumberContainer;

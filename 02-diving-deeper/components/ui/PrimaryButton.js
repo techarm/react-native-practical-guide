@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   buttonInnerContainer: {
     backgroundColor: Colors.primary500,
-    paddingVertical: 8,
+    paddingVertical: 12,
     paddingHorizontal: 16,
     elevation: 2,
     shadowColor: "black",
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   buttonText: {
-    fontFamily: "open-sans",
+    fontFamily: "open-sans-bold",
     color: "white",
     textAlign: "center",
   },

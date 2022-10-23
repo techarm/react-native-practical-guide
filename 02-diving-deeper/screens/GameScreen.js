@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Alert, FlatList } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Alert,
+  FlatList,
+  useWindowDimensions,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import Title from "../components/ui/Title";
@@ -8,6 +15,8 @@ import PrimaryButton from "../components/ui/PrimaryButton";
 import InstructionText from "../components/ui/InstructionText";
 import Card from "../components/ui/Card";
 import GuessLogItem from "../components/game/GuessLogItem";
+import React from "react";
+import reactDom from "react-dom";
 
 function generateRandomBetween(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -30,6 +39,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
   );
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [guessRounds, setGuessRounds] = useState([]);
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     if (currentGuess === +userNumber) {
@@ -77,11 +87,21 @@ const GameScreen = ({ userNumber, onGameOver }) => {
   };
 
   const guessRoundsListLength = guessRounds.length;
-
-  return (
-    <View style={styles.screen}>
-      <Title>Opponent's Guess</Title>
-      <NumberContainer>{currentGuess}</NumberContainer>
+  let content = (
+    <React.Fragment>
+      <NumberContainer
+        style={{
+          marginTop: 36,
+          width: width / 2,
+          height: width / 2,
+          borderRadius: width / 4,
+        }}
+        textStyle={{
+          fontSize: width / 4,
+        }}
+      >
+        {currentGuess}
+      </NumberContainer>
       <Card>
         <InstructionText style={styles.instructionText}>
           Higher or lower?
@@ -101,9 +121,6 @@ const GameScreen = ({ userNumber, onGameOver }) => {
         </View>
       </Card>
       <View style={styles.listContainer}>
-        {/* {guessRounds.map((guessRounds) => (
-          <Text key={guessRounds}>{guessRounds}</Text>
-        ))} */}
         <FlatList
           data={guessRounds}
           keyExtractor={(item) => item}
@@ -115,6 +132,54 @@ const GameScreen = ({ userNumber, onGameOver }) => {
           )}
         />
       </View>
+    </React.Fragment>
+  );
+
+  // landscape mode layout
+  if (height < width) {
+    content = (
+      <View style={styles.landscapeContainer}>
+        <View style={styles.landscapeButtonContainer}>
+          <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+            <Ionicons name="md-remove" size={24} color="white" />
+          </PrimaryButton>
+        </View>
+        <View style={styles.landscapeNumberContainer}>
+          <NumberContainer
+            style={{
+              width: height / 2.5,
+              height: height / 2.5,
+              borderRadius: height / 2.5,
+            }}
+          >
+            {currentGuess}
+          </NumberContainer>
+        </View>
+        <View style={styles.landscapeListContainer}>
+          <FlatList
+            data={guessRounds}
+            keyExtractor={(item) => item}
+            renderItem={(itemData) => (
+              <GuessLogItem
+                roundNumber={guessRoundsListLength - itemData.index}
+                guess={itemData.item}
+              />
+            )}
+          />
+        </View>
+        <View style={styles.landscapeButtonContainer}>
+          <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
+            <Ionicons name="md-add" size={24} color="white" />
+          </PrimaryButton>
+        </View>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.screen}>
+      <Title>Opponent's Guess</Title>
+      {content}
     </View>
   );
 };
@@ -137,6 +202,22 @@ const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
     padding: 16,
+  },
+  landscapeContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  landscapeNumberContainer: {
+    paddingHorizontal: 25,
+    justifyContent: "center",
+  },
+  landscapeListContainer: {
+    flex: 3,
+    padding: 16,
+  },
+  landscapeButtonContainer: {
+    justifyContent: "center",
   },
 });
 

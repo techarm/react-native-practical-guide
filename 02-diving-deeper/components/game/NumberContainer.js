@@ -5,11 +5,11 @@ import Colors from "../../constants/colors";
 // window: entire available width and height excluding the status bar.
 const deviceWidth = Dimensions.get("window").width;
 
-const NumberContainer = ({ children }) => {
+const NumberContainer = ({ children, style, textStyle }) => {
   return (
     <View style={styles.rootContainer}>
-      <View style={styles.container}>
-        <Text style={styles.numberText}>{children}</Text>
+      <View style={[styles.container, style]}>
+        <Text style={[styles.numberText, textStyle]}>{children}</Text>
       </View>
     </View>
   );
@@ -21,19 +21,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   container: {
-    width: deviceWidth / 2,
-    height: deviceWidth / 2,
-    borderRadius: deviceWidth / 4,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     borderWidth: 3,
     borderColor: Colors.accent500,
-    marginTop: 24,
     backgroundColor: Colors.primary800,
     alignItems: "center",
     justifyContent: "center",
   },
   numberText: {
     color: Colors.accent500,
-    fontSize: deviceWidth / 4,
+    fontSize: 36,
     fontFamily: "open-sans-bold",
   },
 });

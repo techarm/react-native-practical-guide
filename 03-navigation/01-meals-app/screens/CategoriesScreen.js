@@ -3,9 +3,12 @@ import { CATEGORIES } from "../data/dummy-data";
 import CategoryGridTile from "../components/CategoryGridTile";
 
 function CategoriesScreen({ navigation }) {
+  // FlatList renderItem
   const renderCategoryItem = ({ item }) => {
     const onPressHandler = () => {
-      navigation.navigate("MealsOverview");
+      navigation.navigate("MealsOverview", {
+        categoryId: item.id,
+      });
     };
 
     return (

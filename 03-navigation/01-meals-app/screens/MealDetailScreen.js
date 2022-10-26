@@ -23,7 +23,7 @@ const MealDetailScreen = ({ route }) => {
           <SubTitle>Ingredients</SubTitle>
           <List data={selectedMeal.ingredients} />
           <SubTitle>Steps</SubTitle>
-          <List data={selectedMeal.steps} />
+          <List data={selectedMeal.steps} stepNumber="true" />
         </View>
       </View>
     </ScrollView>

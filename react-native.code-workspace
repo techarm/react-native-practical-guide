@@ -8,6 +8,9 @@
     },
     {
       "path": "03-navigation"
+    },
+    {
+      "path": "04-redux-context-api"
     }
   ]
 }

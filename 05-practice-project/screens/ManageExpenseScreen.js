@@ -1,10 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
-import { ExpenseList } from "../components/ExpenseList";
 
-export default function AllExpensesScreen() {
+export default function ManageExpenseScreen() {
   return (
     <View style={styles.rootContainer}>
-      <ExpenseList />
+      <Text>Manage Expense Screen!</Text>
     </View>
   );
 }

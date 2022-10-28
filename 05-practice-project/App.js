@@ -1,50 +1,67 @@
+import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
 import AllExpensesScreen from "./screens/AllExpensesScreen";
 import RecentExpenseScreen from "./screens/RecentExpenseScreen";
-import React from "react";
+import ManageExpenseScreen from "./screens/ManageExpenseScreen";
+import { GlobalStyles } from "./constants/styles";
 
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+const BottomTabs = createBottomTabNavigator();
+
+function ExpensesOverview() {
+  return (
+    <BottomTabs.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: "white",
+        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+      }}
+    >
+      <BottomTabs.Screen
+        name="RecentExpense"
+        component={RecentExpenseScreen}
+        options={{
+          title: "Recent Expenses",
+          tabBarLabel: "Recent",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="hourglass" color={color} size={23} />
+          ),
+        }}
+      />
+      <BottomTabs.Screen
+        name="AllExpenses"
+        component={AllExpensesScreen}
+        options={{
+          title: "All Expenses",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="calendar" color={color} size={size} />
+          ),
+        }}
+      />
+    </BottomTabs.Navigator>
+  );
+}
 
 export default function App() {
   return (
     <React.Fragment>
       <StatusBar style="auto" />
       <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen
-            name="Recent"
-            component={RecentExpenseScreen}
-            options={{
-              tabBarIcon: (color, size) => (
-                <Ionicons name="timer" color={color} size={size} />
-              ),
-            }}
+        <Stack.Navigator>
+          <Stack.Screen
+            name="ExpenseOverview"
+            component={ExpensesOverview}
+            options={{ headerShown: false }}
           />
-          <Tab.Screen
-            name="All Expenses"
-            component={AllExpensesScreen}
-            options={{
-              tabBarIcon: (color, size) => (
-                <Ionicons name="calendar" color={color} size={size} />
-              ),
-            }}
-          />
-        </Tab.Navigator>
+          <Stack.Screen name="ManageExpense" component={ManageExpenseScreen} />
+        </Stack.Navigator>
       </NavigationContainer>
     </React.Fragment>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -10,7 +10,6 @@ export default function ManageExpenseScreen({ route, navigation }) {
 
   const editedExpenseId = route.params?.expenseId;
   const isEditing = !!editedExpenseId;
-  console.log(editedExpenseId);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -28,7 +27,19 @@ export default function ManageExpenseScreen({ route, navigation }) {
   };
 
   const confirmHandler = () => {
-    expenseContext.addExpense("Test", 9.99, new Date());
+    if (isEditing) {
+      expenseContext.updateExpense(editedExpenseId, {
+        description: "Updated!",
+        amount: 12.34,
+        date: new Date(),
+      });
+    } else {
+      expenseContext.addExpense({
+        description: "Test",
+        amount: 9.99,
+        date: new Date(),
+      });
+    }
     navigation.goBack();
   };
 
@@ -39,7 +50,7 @@ export default function ManageExpenseScreen({ route, navigation }) {
           Cancel
         </Button>
         <Button style={styles.button} onPress={confirmHandler}>
-          Add
+          {isEditing ? "Update" : "Add"}
         </Button>
       </View>
       {isEditing && (

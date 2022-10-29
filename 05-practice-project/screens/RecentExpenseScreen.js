@@ -1,12 +1,9 @@
-import { View, Text, StyleSheet } from "react-native";
+import { useContext } from "react";
+import { ExpensesContext } from "../store/expense-context";
 import ExpensesOutput from "../components/Expenses/ExpensesOutput";
 
 export default function RecentExpenseScreen() {
-  return <ExpensesOutput expensesPeriod="Last 7 Days" />;
+  const expensesContext = useContext(ExpensesContext);
+  const expenses = expensesContext.items;
+  return <ExpensesOutput expensesPeriod="Last 7 Days" expenses={expenses} />;
 }
-
-const styles = StyleSheet.create({
-  rootContainer: {
-    flex: 1,
-  },
-});

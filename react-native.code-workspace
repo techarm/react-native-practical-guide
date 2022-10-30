@@ -14,6 +14,9 @@
     },
     {
       "path": "05-practice-project"
+    },
+    {
+      "path": "06-handing-user-input"
     }
   ]
 }

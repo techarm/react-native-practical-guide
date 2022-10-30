@@ -3,10 +3,17 @@ import ExpensesSummary from "./ExpensesSummary";
 import ExpensesList from "./ExpensesList";
 import { GlobalStyles } from "../../constants/styles";
 
-export default function ExpensesOutput({ expenses, expensesPeriod, fallback }) {
+export default function ExpensesOutput({
+  expenses,
+  expensesPeriod,
+  fallback,
+  refreshControl,
+}) {
   let content = <Text style={styles.infoText}>{fallback}</Text>;
   if (expenses.length > 0) {
-    content = <ExpensesList expenses={expenses} />;
+    content = (
+      <ExpensesList expenses={expenses} refreshControl={refreshControl} />
+    );
   }
 
   return (

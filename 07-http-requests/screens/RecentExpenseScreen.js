@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { RefreshControl } from "react-native";
 import { ExpensesContext } from "../store/expense-context";
 import ExpensesOutput from "../components/Expenses/ExpensesOutput";
 import { getDateMinusDays } from "../utils/date";
@@ -8,18 +9,23 @@ import ErrorOverlay from "../components/UI/ErrorOverlay";
 
 export default function RecentExpenseScreen() {
   const [isFetching, setIsFetching] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState();
   const expensesContext = useContext(ExpensesContext);
+
+  const fetchExpenseData = async () => {
+    try {
+      const expense = await fetchExpenses();
+      expensesContext.setExpense(expense);
+    } catch (error) {
+      setError("Could not fetch expense data from server");
+    }
+  };
 
   useEffect(() => {
     const getExpenses = async () => {
       setIsFetching(true);
-      try {
-        const expense = await fetchExpenses();
-        expensesContext.setExpense(expense);
-      } catch (error) {
-        setError("Could not fetch expense data from server");
-      }
+      await fetchExpenseData();
       setIsFetching(false);
     };
     getExpenses();
@@ -27,6 +33,12 @@ export default function RecentExpenseScreen() {
 
   const errorHandler = () => {
     setError(null);
+  };
+
+  const refreshHandler = async () => {
+    setRefreshing(true);
+    await fetchExpenseData();
+    setRefreshing(false);
   };
 
   if (error && !isFetching) {
@@ -48,6 +60,9 @@ export default function RecentExpenseScreen() {
       expensesPeriod="Last 7 Days"
       expenses={recentExpenses}
       fallback="No expenses registered for the last 7 days."
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={refreshHandler} />
+      }
     />
   );
 }

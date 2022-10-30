@@ -1,12 +1,13 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import { ExpenseItem } from "./ExpenseItem";
 
-export default function ExpensesList({ expenses }) {
+export default function ExpensesList({ expenses, refreshControl }) {
   return (
     <FlatList
       data={expenses}
       keyExtractor={(item) => item.id}
       renderItem={(itemData) => <ExpenseItem {...itemData.item} />}
+      refreshControl={refreshControl}
     />
   );
 }

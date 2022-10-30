@@ -17,6 +17,9 @@
     },
     {
       "path": "06-handing-user-input"
+    },
+    {
+      "path": "07-http-requests"
     }
   ]
 }

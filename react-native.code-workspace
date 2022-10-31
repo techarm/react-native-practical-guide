@@ -20,6 +20,9 @@
     },
     {
       "path": "07-http-requests"
+    },
+    {
+      "path": "08-authentication"
     }
   ]
 }

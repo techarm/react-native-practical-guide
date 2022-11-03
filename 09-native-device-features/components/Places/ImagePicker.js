@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, Button, Alert, Image, StyleSheet } from 'react-native';
+import { View, Text, Alert, Image, StyleSheet } from 'react-native';
 import {
   launchCameraAsync,
   useCameraPermissions,
@@ -32,7 +32,6 @@ function ImagePicker() {
 
   const takeImageHandler = async () => {
     const hasPermission = await verifyPermissions();
-    console.log(hasPermission);
     if (!hasPermission) {
       return;
     }
@@ -46,7 +45,7 @@ function ImagePicker() {
     setPickedImage(image.uri);
   };
 
-  let imagePreview = <Text style={styles.previewText}>Preview</Text>;
+  let imagePreview = <Text style={styles.previewText}>Image</Text>;
 
   if (pickedImage) {
     imagePreview = <Image style={styles.image} source={{ uri: pickedImage }} />;
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   previewText: {
-    color: 'white',
+    color: '#eee',
     fontSize: 48,
   },
 });

@@ -5,10 +5,9 @@ import {
   useCameraPermissions,
   PermissionStatus,
 } from 'expo-image-picker';
-import { Colors } from '../../constants/styles';
 import OutlinedButton from '../UI/OutlinedButton';
 
-function ImagePicker() {
+function ImagePicker({ onTakeImage }) {
   const [pickedImage, setPickedImage] = useState();
   const [cameraPermissionInfomation, requestPermission] =
     useCameraPermissions();
@@ -43,6 +42,7 @@ function ImagePicker() {
     });
 
     setPickedImage(image.uri);
+    onTakeImage(image.uri);
   };
 
   let imagePreview = <Text style={styles.previewText}>Image</Text>;

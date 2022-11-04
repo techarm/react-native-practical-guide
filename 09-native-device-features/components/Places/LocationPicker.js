@@ -6,14 +6,14 @@ import {
   PermissionStatus,
 } from 'expo-location';
 import OutlinedButton from '../UI/OutlinedButton';
-import { getMapPreview } from '../../utils/location';
+import { getAddress, getMapPreview } from '../../utils/location';
 import {
   useNavigation,
   useRoute,
   useIsFocused,
 } from '@react-navigation/native';
 
-function LocationPicker() {
+function LocationPicker({ onPickLocation }) {
   const navigation = useNavigation();
   const route = useRoute();
   const isFocused = useIsFocused();
@@ -34,6 +34,19 @@ function LocationPicker() {
       }
     }
   }, [route, isFocused]);
+
+  useEffect(() => {
+    const handleLocation = async () => {
+      if (pickedLocation) {
+        const address = await getAddress(
+          pickedLocation.lat,
+          pickedLocation.lng
+        );
+        onPickLocation({ ...pickedLocation, address: address });
+      }
+    };
+    handleLocation();
+  }, [pickedLocation, onPickLocation]);
 
   const verifyPermissions = async () => {
     if (locationPermissionInfomation.status === PermissionStatus.UNDETERMINED) {
@@ -59,10 +72,13 @@ function LocationPicker() {
     }
 
     const location = await getCurrentPositionAsync();
-    setPickedLication({
+
+    const pickedLocation = {
       lat: location.coords.latitude,
       lng: location.coords.longitude,
-    });
+    };
+
+    setPickedLication(pickedLocation);
   };
 
   const pickOnMapHandler = () => {

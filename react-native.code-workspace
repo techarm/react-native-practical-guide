@@ -26,6 +26,9 @@
     },
     {
       "path": "09-native-device-features"
+    },
+    {
+      "path": "10-without-expo"
     }
   ]
 }
